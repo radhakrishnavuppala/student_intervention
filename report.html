@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>studentIntervention</title>
+<title>student_intervention</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -462,7 +462,7 @@ div#notebook {
 <span class="n">n_students</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="c"># TODO: Calculate number of features</span>
-<span class="n">n_features</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">n_features</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
 
 <span class="c"># TODO: Calculate passing students</span>
 <span class="n">n_passed</span> <span class="o">=</span> <span class="n">student_data</span><span class="p">[</span><span class="n">student_data</span><span class="p">[</span><span class="s">&#39;passed&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;yes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -492,7 +492,7 @@ div#notebook {
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Total number of students: 395
-Number of features: 31
+Number of features: 30
 Number of students who passed: 265
 Number of students who failed: 130
 Graduation rate of the class: 67.09%
@@ -852,7 +852,7 @@ Feature values:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># TODO: Import any additional functionality you may need here</span>
@@ -865,11 +865,16 @@ Feature values:
 <span class="n">num_test</span> <span class="o">=</span> <span class="n">X_all</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">num_train</span>
 
 <span class="c"># TODO: Shuffle and split the dataset into the number of training and testing points above</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_all</span><span class="p">,</span> <span class="n">y_all</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.76</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_all</span><span class="p">,</span> <span class="n">y_all</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y_all</span><span class="p">,</span><span class="n">train_size</span><span class="o">=</span><span class="mf">0.76</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+
 
 <span class="c"># Show the results of the split</span>
 <span class="k">print</span> <span class="s">&quot;Training set has {} samples.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="k">print</span> <span class="s">&quot;Testing set has {} samples.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="k">print</span> <span class="s">&quot;Grad rates:</span><span class="se">\n</span><span class="s">All Data set has {:.2f}% yes instances&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="s">&#39;yes&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="k">print</span> <span class="s">&quot;Train set has {:.2f}%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="s">&#39;yes&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="k">print</span> <span class="s">&quot;Test set has {:.2f}%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">y_test</span> <span class="o">==</span> <span class="s">&#39;yes&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 
 <span class="n">X_train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -886,11 +891,15 @@ Feature values:
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Training set has 300 samples.
 Testing set has 95 samples.
+Grad rates:
+All Data set has 67.00% yes instances
+Train set has 67.00%
+Test set has 67.37%
 </pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
@@ -923,7 +932,55 @@ Testing set has 95 samples.
   </thead>
   <tbody>
     <tr>
-      <th>23 </th>
+      <th>71 </th>
+      <td> 1</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 15</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td> 3</td>
+      <td> 3</td>
+      <td> 3</td>
+      <td> 1</td>
+      <td> 1</td>
+      <td> 3</td>
+      <td> 0</td>
+    </tr>
+    <tr>
+      <th>119</th>
+      <td> 1</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 15</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td> 3</td>
+      <td> 4</td>
+      <td> 3</td>
+      <td> 1</td>
+      <td> 2</td>
+      <td> 4</td>
+      <td> 6</td>
+    </tr>
+    <tr>
+      <th>151</th>
       <td> 1</td>
       <td> 0</td>
       <td> 0</td>
@@ -936,47 +993,23 @@ Testing set has 95 samples.
       <td> 0</td>
       <td>...</td>
       <td> 1</td>
-      <td> 1</td>
       <td> 0</td>
-      <td> 5</td>
+      <td> 1</td>
       <td> 4</td>
       <td> 4</td>
-      <td> 2</td>
-      <td> 4</td>
-      <td> 5</td>
-      <td>  0</td>
-    </tr>
-    <tr>
-      <th>292</th>
-      <td> 1</td>
-      <td> 0</td>
-      <td> 1</td>
-      <td> 0</td>
-      <td> 18</td>
-      <td> 0</td>
-      <td> 1</td>
-      <td> 0</td>
-      <td> 1</td>
-      <td> 0</td>
-      <td>...</td>
-      <td> 1</td>
-      <td> 1</td>
-      <td> 1</td>
-      <td> 5</td>
       <td> 4</td>
       <td> 3</td>
-      <td> 1</td>
-      <td> 1</td>
       <td> 5</td>
-      <td> 12</td>
+      <td> 5</td>
+      <td> 6</td>
     </tr>
     <tr>
-      <th>84 </th>
+      <th>17 </th>
       <td> 1</td>
       <td> 0</td>
       <td> 1</td>
       <td> 0</td>
-      <td> 15</td>
+      <td> 16</td>
       <td> 0</td>
       <td> 1</td>
       <td> 1</td>
@@ -984,63 +1017,39 @@ Testing set has 95 samples.
       <td> 0</td>
       <td>...</td>
       <td> 1</td>
-      <td> 1</td>
-      <td> 0</td>
-      <td> 4</td>
-      <td> 3</td>
-      <td> 2</td>
-      <td> 2</td>
-      <td> 3</td>
-      <td> 4</td>
-      <td>  2</td>
-    </tr>
-    <tr>
-      <th>278</th>
-      <td> 1</td>
-      <td> 0</td>
-      <td> 1</td>
-      <td> 0</td>
-      <td> 18</td>
-      <td> 0</td>
-      <td> 1</td>
-      <td> 1</td>
       <td> 0</td>
       <td> 0</td>
-      <td>...</td>
-      <td> 1</td>
-      <td> 1</td>
-      <td> 1</td>
-      <td> 2</td>
-      <td> 4</td>
-      <td> 4</td>
-      <td> 1</td>
-      <td> 1</td>
-      <td> 4</td>
-      <td> 15</td>
-    </tr>
-    <tr>
-      <th>3  </th>
-      <td> 1</td>
-      <td> 0</td>
-      <td> 1</td>
-      <td> 0</td>
-      <td> 15</td>
-      <td> 0</td>
-      <td> 1</td>
-      <td> 1</td>
-      <td> 0</td>
-      <td> 0</td>
-      <td>...</td>
-      <td> 1</td>
-      <td> 1</td>
-      <td> 1</td>
-      <td> 3</td>
-      <td> 2</td>
-      <td> 2</td>
-      <td> 1</td>
-      <td> 1</td>
       <td> 5</td>
-      <td>  2</td>
+      <td> 3</td>
+      <td> 2</td>
+      <td> 1</td>
+      <td> 1</td>
+      <td> 4</td>
+      <td> 4</td>
+    </tr>
+    <tr>
+      <th>364</th>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td> 17</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td>...</td>
+      <td> 1</td>
+      <td> 0</td>
+      <td> 0</td>
+      <td> 3</td>
+      <td> 2</td>
+      <td> 2</td>
+      <td> 1</td>
+      <td> 2</td>
+      <td> 3</td>
+      <td> 0</td>
     </tr>
   </tbody>
 </table>
@@ -1099,7 +1108,7 @@ that is not really an issue. The linear separability of data in high dimensions 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
@@ -1295,7 +1304,7 @@ separable. In cases it is not, it is still applicable due to the kernel trick. T
 issue with this method is the training complexity, but given the small size of data here 
 that is not really an issue. Also given the smaller trainng size, the SVM may not learn the model well, i.e. high variance in the model. The linear separability of data in high dimensions is not something that is easy to visually verify, so I am just taking it on faith that the data is.  SVM is used for many classifier applications including document classification, Facial Recognition etc (<a href="http://www.clopinet.com/isabelle/Projects/SVM/applist.html">http://www.clopinet.com/isabelle/Projects/SVM/applist.html</a>).</p>
 </li>
-<li><p>Random Forest is an emsemble method which combines predictions from  several simple decision trees to make the prediction. When the component decision trees are independent, it has a very good accuracy. Given that this problem has many categorical features (after conversion), the decision trees have several features to split on, allowing them to be independent. So the Random Forest should work well with this data.</p>
+<li><p>Random Forest is an emsemble method which combines predictions from  several simple decision trees to make the prediction. When the component decision trees are independent, it has a very good accuracy. Given that this problem has many categorical features (after conversion), the decision trees have several features to split on, allowing them to be independent. So the Random Forest should work well with this data. Random Forests are used for classification and Regression applications. One application in our industry is in building a customer retention model using Random Forests. (<a href="http://dl.acm.org/citation.cfm?id=1707571">http://dl.acm.org/citation.cfm?id=1707571</a>) Random Forest methods as implemented in R also tell us which variables are important in predicting the response variable.</p>
 </li>
 <li>Naive bayes Method: This method makes a naive assumption that the features are independent of each other.
   This assumption is clearly not applicable here. For example, family size has some effect on the
@@ -1326,7 +1335,7 @@ that is not really an issue. Also given the smaller trainng size, the SVM may no
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">train_classifier</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">):</span>
@@ -1408,7 +1417,7 @@ that is not really an issue. Also given the smaller trainng size, the SVM may no
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
 
 <span class="n">clf_A</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
-<span class="n">clf_B</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="n">clf_B</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
 <span class="n">clf_C</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>  
 
 <span class="c"># TODO: Set up the training set sizes</span>
@@ -1446,59 +1455,59 @@ that is not really an issue. Also given the smaller trainng size, the SVM may no
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Training a GaussianNB using a training set size of 100. . .
-Trained model in 0.0008 seconds
+Trained model in 0.0009 seconds
 Made predictions in 0.0003 seconds.
-F1 score for training set: 0.4835.
-Made predictions in 0.0004 seconds.
-F1 score for test set: 0.3023.
+F1 score for training set: 0.2791.
+Made predictions in 0.0003 seconds.
+F1 score for test set: 0.2250.
 Training a GaussianNB using a training set size of 200. . .
 Trained model in 0.0008 seconds
-Made predictions in 0.0004 seconds.
-F1 score for training set: 0.7909.
 Made predictions in 0.0003 seconds.
-F1 score for test set: 0.7258.
+F1 score for training set: 0.7909.
+Made predictions in 0.0002 seconds.
+F1 score for test set: 0.6769.
 Training a GaussianNB using a training set size of 300. . .
 Trained model in 0.0008 seconds
 Made predictions in 0.0004 seconds.
-F1 score for training set: 0.7704.
+F1 score for training set: 0.7775.
 Made predictions in 0.0002 seconds.
-F1 score for test set: 0.7812.
+F1 score for test set: 0.6822.
 Training a RandomForestClassifier using a training set size of 100. . .
-Trained model in 0.2413 seconds
-Made predictions in 0.0527 seconds.
-F1 score for training set: 1.0000.
-Made predictions in 0.0520 seconds.
-F1 score for test set: 0.8182.
+Trained model in 0.0276 seconds
+Made predictions in 0.0074 seconds.
+F1 score for training set: 0.9867.
+Made predictions in 0.0059 seconds.
+F1 score for test set: 0.7778.
 Training a RandomForestClassifier using a training set size of 200. . .
-Trained model in 0.2462 seconds
-Made predictions in 0.0542 seconds.
-F1 score for training set: 1.0000.
-Made predictions in 0.0549 seconds.
-F1 score for test set: 0.8451.
+Trained model in 0.0275 seconds
+Made predictions in 0.0055 seconds.
+F1 score for training set: 0.9927.
+Made predictions in 0.0058 seconds.
+F1 score for test set: 0.7536.
 Training a RandomForestClassifier using a training set size of 300. . .
-Trained model in 0.2593 seconds
-Made predictions in 0.0542 seconds.
-F1 score for training set: 1.0000.
-Made predictions in 0.0538 seconds.
-F1 score for test set: 0.8243.
+Trained model in 0.0299 seconds
+Made predictions in 0.0062 seconds.
+F1 score for training set: 0.9926.
+Made predictions in 0.0066 seconds.
+F1 score for test set: 0.7385.
 Training a SVC using a training set size of 100. . .
 Trained model in 0.0011 seconds
 Made predictions in 0.0007 seconds.
-F1 score for training set: 0.8263.
-Made predictions in 0.0007 seconds.
-F1 score for test set: 0.8199.
+F1 score for training set: 0.8916.
+Made predictions in 0.0006 seconds.
+F1 score for test set: 0.7898.
 Training a SVC using a training set size of 200. . .
-Trained model in 0.0031 seconds
-Made predictions in 0.0023 seconds.
-F1 score for training set: 0.8515.
-Made predictions in 0.0011 seconds.
-F1 score for test set: 0.8188.
+Trained model in 0.0027 seconds
+Made predictions in 0.0019 seconds.
+F1 score for training set: 0.8918.
+Made predictions in 0.0010 seconds.
+F1 score for test set: 0.8105.
 Training a SVC using a training set size of 300. . .
-Trained model in 0.0058 seconds
-Made predictions in 0.0043 seconds.
-F1 score for training set: 0.8559.
-Made predictions in 0.0015 seconds.
-F1 score for test set: 0.8108.
+Trained model in 0.0051 seconds
+Made predictions in 0.0038 seconds.
+F1 score for training set: 0.8816.
+Made predictions in 0.0017 seconds.
+F1 score for test set: 0.7974.
 </pre>
 </div>
 </div>
@@ -1537,22 +1546,22 @@ F1 score for test set: 0.8108.
 <td style="text-align:center">100</td>
 <td style="text-align:center">0.0008</td>
 <td style="text-align:center">0.0003</td>
-<td style="text-align:center">0.4835</td>
-<td style="text-align:center">0.3023</td>
+<td style="text-align:center">0.2791</td>
+<td style="text-align:center">0.2250</td>
 </tr>
 <tr>
 <td style="text-align:center">200</td>
 <td style="text-align:center">0.0010</td>
 <td style="text-align:center">0.0003</td>
 <td style="text-align:center">0.7909</td>
-<td style="text-align:center">0.7258</td>
+<td style="text-align:center">0.6769</td>
 </tr>
 <tr>
 <td style="text-align:center">300</td>
 <td style="text-align:center">0.0008</td>
 <td style="text-align:center">0.0002</td>
-<td style="text-align:center">0.7704</td>
-<td style="text-align:center">0.7812</td>
+<td style="text-align:center">0.7775</td>
+<td style="text-align:center">0.6822</td>
 </tr>
 </tbody>
 </table>
@@ -1571,22 +1580,22 @@ F1 score for test set: 0.8108.
 <td style="text-align:center">100</td>
 <td style="text-align:center">0.2413</td>
 <td style="text-align:center">0.0527</td>
-<td style="text-align:center">1.0</td>
-<td style="text-align:center">0.8182</td>
+<td style="text-align:center">0.9867</td>
+<td style="text-align:center">0.7778</td>
 </tr>
 <tr>
 <td style="text-align:center">200</td>
 <td style="text-align:center">0.2462</td>
 <td style="text-align:center">0.0542</td>
-<td style="text-align:center">1.0</td>
-<td style="text-align:center">0.8451</td>
+<td style="text-align:center">0.9927</td>
+<td style="text-align:center">0.7536</td>
 </tr>
 <tr>
 <td style="text-align:center">300</td>
 <td style="text-align:center">0.2593</td>
 <td style="text-align:center">0.0549</td>
-<td style="text-align:center">1.0</td>
-<td style="text-align:center">0.8243</td>
+<td style="text-align:center">0.9926</td>
+<td style="text-align:center">0.7385</td>
 </tr>
 </tbody>
 </table>
@@ -1605,22 +1614,22 @@ F1 score for test set: 0.8108.
 <td style="text-align:center">100</td>
 <td style="text-align:center">0.0011</td>
 <td style="text-align:center">0.0007</td>
-<td style="text-align:center">0.8263</td>
-<td style="text-align:center">0.8199</td>
+<td style="text-align:center">0.8916</td>
+<td style="text-align:center">0.7898</td>
 </tr>
 <tr>
 <td style="text-align:center">200</td>
 <td style="text-align:center">0.0037</td>
 <td style="text-align:center">0.0025</td>
-<td style="text-align:center">0.8515</td>
-<td style="text-align:center">0.8188</td>
+<td style="text-align:center">0.8918</td>
+<td style="text-align:center">0.8105</td>
 </tr>
 <tr>
 <td style="text-align:center">300</td>
 <td style="text-align:center">0.0059</td>
 <td style="text-align:center">0.0045</td>
-<td style="text-align:center">0.8559</td>
-<td style="text-align:center">0.8108</td>
+<td style="text-align:center">0.8816</td>
+<td style="text-align:center">0.7974</td>
 </tr>
 </tbody>
 </table>
@@ -1653,7 +1662,8 @@ F1 score for test set: 0.8108.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer: </strong> Based on the results tabulated above, I would choose the Random Forest as the appropriate model for predicting this data. The training F1 is very high indicating that the model has learned the training data too well, indicating a overfit situation. The testing scores are still better than other models. By decreasing model complexity by parameter tuning, this overfit situation could be corrected. I also notice that SVM test error seems to have saturated indicating that model is not getting better with more training. The model clearly is a bit more expensive in terms of training as it is building about 100 decision trees for the ensemble. The training cost can be hidden from the consumers as the model can be trained offline. The test time performance is also a bit slow compared to other algorithms, but given the high accuracy, it is a good trade off.</p>
+<p><strong>Answer: </strong> SVM clearly performs better on the test set, but I would choose the Random Forest as the appropriate model for predicting this data. The training F1 is very high indicating that the model has learned the training data too well, indicating a overfit situation. This overfitting situation shows up in weaker test results observed. 
+By decreasing model complexity by parameter tuning, this overfit situation could be corrected. I also notice that SVM test error seems to have saturated indicating that model is not getting better with more training. The RF model clearly is a bit more expensive in terms of training as it is building about 100 decision trees for the ensemble. The training cost can be hidden from the consumers as the model can be trained offline. The test time performance is also a bit slow compared to other algorithms, but given the high accuracy that results from the model, it is a good trade off.</p>
 
 </div>
 </div>
@@ -1673,7 +1683,7 @@ F1 score for test set: 0.8108.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer: </strong> The Random Forest is a ensemble method which means it uses several simple classifiers and bases its decision on the predictions made by those component classifiers. The Random Forest creates a set of estimators (based on parameter n_estimators which defaults to 10) which are simple decision trees which uses random features to perform the splits. So though all these decision trees train on same data, they differ significantly in how trees are built. This randomness in decision tree construction is important in ensuring that they generate diverse independent predictions. When classifying an instance, each of the component decision trees are used to produce their predictions and all those predictions are combined to obtain the classification by Random Forest. (For example a simple majority vote can be used). This use of component decision trees is what makes this model a bit resource intensive. But as can be seen above, even with a moderator number of estimators (n=100), the Random Forest perfoms quite well.</p>
+<p><strong>Answer: </strong> Random Forest is a ensemble method which makes predictions based on several simple classifiers to make a prediction about an example. Each simple classifier in this case makes simple decisions to decide whether a student has passed or not. For example a simple decision rule would be that student will graduate if his/her study time is greater than some value S and if her attendance is greater than some value A. There are 30 such factors based on which decision rules can be formed. (Such factors are called features). Random Forest builds several such simple classifiers (called decision trees) using random set of features. To predict whether a student would graduate, the Random Forest uses these simple classifiers to make a predict and then takes a majority vote to make its prediction. For example if Random Forest used 100 simple classifiers, and for a student 75 of the classifiers predict passed = 'yes' and 25 predict passed = 'no', then Random Forest will predict that student will pass.</p>
 
 </div>
 </div>
@@ -1704,7 +1714,7 @@ F1 score for test set: 0.8108.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># TODO: Import &#39;GridSearchCV&#39; and &#39;make_scorer&#39;</span>
@@ -1712,7 +1722,7 @@ F1 score for test set: 0.8108.
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
 
 <span class="c"># TODO: Create the parameters list you wish to tune</span>
-<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">500</span><span class="p">],</span> <span class="s">&#39;max_depth&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">]}</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">400</span><span class="p">,</span><span class="mi">500</span><span class="p">],</span> <span class="s">&#39;max_depth&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">]}</span>
 
 <span class="c"># TODO: Initialize the classifier</span>
 <span class="n">clf</span> <span class="o">=</span>  <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
@@ -1727,9 +1737,13 @@ F1 score for test set: 0.8108.
 <span class="c"># TODO: Fit the grid search object to the training data and find the optimal parameters</span>
 <span class="n">grid_obj</span> <span class="o">=</span> <span class="n">grid_obj</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">grid_obj</span><span class="o">.</span><span class="n">grid_scores_</span><span class="p">))</span>
+
 <span class="c"># Get the estimator</span>
 <span class="n">clf</span> <span class="o">=</span> <span class="n">grid_obj</span><span class="o">.</span><span class="n">best_estimator_</span>
 
+<span class="k">print</span> <span class="s">&quot;The best parameters are &quot;</span><span class="p">,</span> <span class="n">grid_obj</span><span class="o">.</span><span class="n">best_params_</span>
 <span class="c"># Report the final F1 score for training and testing after parameter tuning</span>
 <span class="k">print</span> <span class="s">&quot;Tuned model has a training F1 score of {:.4f}.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">predict_labels</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
 <span class="k">print</span> <span class="s">&quot;Tuned model has a testing F1 score of {:.4f}.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">predict_labels</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
@@ -1744,11 +1758,335 @@ F1 score for test set: 0.8108.
 
 
 <div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Library/Python/2.7/site-packages/sklearn/model_selection/_search.py:662: DeprecationWarning: The grid_scores_ attribute was deprecated in version 0.18 in favor of the more elaborate cv_results_ attribute. The grid_scores_ attribute will not be available from 0.20
+  DeprecationWarning)
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<div style="max-height:1000px;max-width:1500px;overflow:auto;">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0 </th>
+      <td>   {u'n_estimators': 10, u'max_depth': 1}</td>
+      <td> 0.802514</td>
+      <td>  [0.814814814815, 0.79754601227, 0.795180722892]</td>
+    </tr>
+    <tr>
+      <th>1 </th>
+      <td>   {u'n_estimators': 50, u'max_depth': 1}</td>
+      <td> 0.802395</td>
+      <td> [0.802395209581, 0.802395209581, 0.802395209581]</td>
+    </tr>
+    <tr>
+      <th>2 </th>
+      <td>  {u'n_estimators': 100, u'max_depth': 1}</td>
+      <td> 0.802395</td>
+      <td> [0.802395209581, 0.802395209581, 0.802395209581]</td>
+    </tr>
+    <tr>
+      <th>3 </th>
+      <td>  {u'n_estimators': 200, u'max_depth': 1}</td>
+      <td> 0.802395</td>
+      <td> [0.802395209581, 0.802395209581, 0.802395209581]</td>
+    </tr>
+    <tr>
+      <th>4 </th>
+      <td>  {u'n_estimators': 300, u'max_depth': 1}</td>
+      <td> 0.802395</td>
+      <td> [0.802395209581, 0.802395209581, 0.802395209581]</td>
+    </tr>
+    <tr>
+      <th>5 </th>
+      <td>  {u'n_estimators': 400, u'max_depth': 1}</td>
+      <td> 0.802395</td>
+      <td> [0.802395209581, 0.802395209581, 0.802395209581]</td>
+    </tr>
+    <tr>
+      <th>6 </th>
+      <td>  {u'n_estimators': 500, u'max_depth': 1}</td>
+      <td> 0.802395</td>
+      <td> [0.802395209581, 0.802395209581, 0.802395209581]</td>
+    </tr>
+    <tr>
+      <th>7 </th>
+      <td>   {u'n_estimators': 10, u'max_depth': 2}</td>
+      <td> 0.798185</td>
+      <td> [0.794871794872, 0.792452830189, 0.807228915663]</td>
+    </tr>
+    <tr>
+      <th>8 </th>
+      <td>   {u'n_estimators': 50, u'max_depth': 2}</td>
+      <td> 0.799192</td>
+      <td>            [0.795180722892, 0.8, 0.802395209581]</td>
+    </tr>
+    <tr>
+      <th>9 </th>
+      <td>  {u'n_estimators': 100, u'max_depth': 2}</td>
+      <td> 0.804839</td>
+      <td>            [0.812121212121, 0.8, 0.802395209581]</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>  {u'n_estimators': 200, u'max_depth': 2}</td>
+      <td> 0.801597</td>
+      <td>            [0.802395209581, 0.8, 0.802395209581]</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>  {u'n_estimators': 300, u'max_depth': 2}</td>
+      <td> 0.804006</td>
+      <td> [0.802395209581, 0.807228915663, 0.802395209581]</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>  {u'n_estimators': 400, u'max_depth': 2}</td>
+      <td> 0.804006</td>
+      <td> [0.802395209581, 0.807228915663, 0.802395209581]</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>  {u'n_estimators': 500, u'max_depth': 2}</td>
+      <td> 0.804006</td>
+      <td> [0.802395209581, 0.807228915663, 0.802395209581]</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>   {u'n_estimators': 10, u'max_depth': 3}</td>
+      <td> 0.800877</td>
+      <td> [0.815789473684, 0.769230769231, 0.817610062893]</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>   {u'n_estimators': 50, u'max_depth': 3}</td>
+      <td> 0.802284</td>
+      <td> [0.812121212121, 0.782608695652, 0.812121212121]</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>  {u'n_estimators': 100, u'max_depth': 3}</td>
+      <td> 0.803934</td>
+      <td> [0.812121212121, 0.782608695652, 0.817073170732]</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>  {u'n_estimators': 200, u'max_depth': 3}</td>
+      <td> 0.803158</td>
+      <td>  [0.807228915663, 0.79012345679, 0.812121212121]</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>  {u'n_estimators': 300, u'max_depth': 3}</td>
+      <td> 0.804789</td>
+      <td>  [0.812121212121, 0.79012345679, 0.812121212121]</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>  {u'n_estimators': 400, u'max_depth': 3}</td>
+      <td> 0.807263</td>
+      <td>  [0.812121212121, 0.79754601227, 0.812121212121]</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>  {u'n_estimators': 500, u'max_depth': 3}</td>
+      <td> 0.807263</td>
+      <td>  [0.812121212121, 0.79754601227, 0.812121212121]</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>   {u'n_estimators': 10, u'max_depth': 4}</td>
+      <td> 0.797410</td>
+      <td>  [0.805369127517, 0.78431372549, 0.802547770701]</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>   {u'n_estimators': 50, u'max_depth': 4}</td>
+      <td> 0.798318</td>
+      <td>                  [0.8125, 0.775, 0.807453416149]</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>  {u'n_estimators': 100, u'max_depth': 4}</td>
+      <td> 0.804079</td>
+      <td> [0.814814814815, 0.782608695652, 0.814814814815]</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>  {u'n_estimators': 200, u'max_depth': 4}</td>
+      <td> 0.805813</td>
+      <td>          [0.814814814815, 0.79012345679, 0.8125]</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>  {u'n_estimators': 300, u'max_depth': 4}</td>
+      <td> 0.809203</td>
+      <td>  [0.819875776398, 0.79012345679, 0.817610062893]</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>  {u'n_estimators': 400, u'max_depth': 4}</td>
+      <td> 0.803308</td>
+      <td>         [0.814814814815, 0.782608695652, 0.8125]</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>  {u'n_estimators': 500, u'max_depth': 4}</td>
+      <td> 0.803308</td>
+      <td>         [0.814814814815, 0.782608695652, 0.8125]</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>   {u'n_estimators': 10, u'max_depth': 5}</td>
+      <td> 0.778796</td>
+      <td> [0.802721088435, 0.741721854305, 0.791946308725]</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>   {u'n_estimators': 50, u'max_depth': 5}</td>
+      <td> 0.786423</td>
+      <td> [0.810126582278, 0.764331210191, 0.784810126582]</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>  {u'n_estimators': 100, u'max_depth': 5}</td>
+      <td> 0.799209</td>
+      <td>                  [0.810126582278, 0.775, 0.8125]</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>  {u'n_estimators': 200, u'max_depth': 5}</td>
+      <td> 0.802537</td>
+      <td> [0.817610062893, 0.779874213836, 0.810126582278]</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>  {u'n_estimators': 300, u'max_depth': 5}</td>
+      <td> 0.805079</td>
+      <td>         [0.817610062893, 0.7875, 0.810126582278]</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>  {u'n_estimators': 400, u'max_depth': 5}</td>
+      <td> 0.800839</td>
+      <td> [0.817610062893, 0.767295597484, 0.817610062893]</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>  {u'n_estimators': 500, u'max_depth': 5}</td>
+      <td> 0.803407</td>
+      <td>          [0.817610062893, 0.775, 0.817610062893]</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>  {u'n_estimators': 10, u'max_depth': 10}</td>
+      <td> 0.782349</td>
+      <td>           [0.802721088435, 0.75, 0.794326241135]</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>  {u'n_estimators': 50, u'max_depth': 10}</td>
+      <td> 0.789467</td>
+      <td>  [0.771241830065, 0.76821192053, 0.828947368421]</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td> {u'n_estimators': 100, u'max_depth': 10}</td>
+      <td> 0.785777</td>
+      <td>  [0.789473684211, 0.746666666667, 0.82119205298]</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td> {u'n_estimators': 200, u'max_depth': 10}</td>
+      <td> 0.781161</td>
+      <td>           [0.807692307692, 0.72, 0.815789473684]</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td> {u'n_estimators': 300, u'max_depth': 10}</td>
+      <td> 0.776254</td>
+      <td> [0.807692307692, 0.723684210526, 0.797385620915]</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td> {u'n_estimators': 400, u'max_depth': 10}</td>
+      <td> 0.780936</td>
+      <td> [0.812903225806, 0.727272727273, 0.802631578947]</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td> {u'n_estimators': 500, u'max_depth': 10}</td>
+      <td> 0.781566</td>
+      <td>  [0.815286624204, 0.718954248366, 0.81045751634]</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>  {u'n_estimators': 10, u'max_depth': 20}</td>
+      <td> 0.753186</td>
+      <td> [0.759124087591, 0.742857142857, 0.757575757576]</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>  {u'n_estimators': 50, u'max_depth': 20}</td>
+      <td> 0.773010</td>
+      <td>  [0.761904761905, 0.746666666667, 0.81045751634]</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td> {u'n_estimators': 100, u'max_depth': 20}</td>
+      <td> 0.782819</td>
+      <td>  [0.778523489933, 0.733333333333, 0.83660130719]</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td> {u'n_estimators': 200, u'max_depth': 20}</td>
+      <td> 0.786468</td>
+      <td>            [0.81045751634, 0.72, 0.828947368421]</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td> {u'n_estimators': 300, u'max_depth': 20}</td>
+      <td> 0.792898</td>
+      <td> [0.812903225806, 0.736842105263, 0.828947368421]</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td> {u'n_estimators': 400, u'max_depth': 20}</td>
+      <td> 0.787569</td>
+      <td> [0.805194805195, 0.741721854305, 0.815789473684]</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td> {u'n_estimators': 500, u'max_depth': 20}</td>
+      <td> 0.786000</td>
+      <td>            [0.812903225806, 0.745098039216, 0.8]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Made predictions in 0.1026 seconds.
-Tuned model has a training F1 score of 0.8825.
-Made predictions in 0.1005 seconds.
-Tuned model has a testing F1 score of 0.8497.
+<pre>The best parameters are  {&apos;n_estimators&apos;: 300, &apos;max_depth&apos;: 4}
+Made predictions in 0.1523 seconds.
+Tuned model has a training F1 score of 0.8608.
+Made predictions in 0.1486 seconds.
+Tuned model has a testing F1 score of 0.8129.
 </pre>
 </div>
 </div>
@@ -1772,7 +2110,7 @@ Tuned model has a testing F1 score of 0.8497.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer: </strong> The training_F1 is 0.8825 and the testing_F1 score is 0.8497. The testing F1 score previously was 0.82 and model was overfitting. After tuning, the model does not overfit and testing score has improved.</p>
+<p><strong>Answer: </strong> The training_F1 is 0.8608 and the testing_F1 score is 0.8129. The testing F1 score of the untuned classifier was 0.7385.</p>
 
 </div>
 </div>
